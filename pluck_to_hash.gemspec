@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["girish.sonawane@gmail.com"]
   spec.summary       = %q{Extend ActiveRecord pluck to return hash}
   spec.description   = %q{Extend ActiveRecord pluck to return hash instead of an array. Useful when plucking multiple columns.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/girishso/pluck_to_hash"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")

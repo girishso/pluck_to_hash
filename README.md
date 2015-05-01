@@ -57,4 +57,4 @@ Post.limit(2).pluck_h(:id)
 ## Licence
 MIT License
 
-Copyright © 2015 Girish Sonawane (girish dot sonawane at gmail dot com)
+Brought to you by: [Cube Root Software](http://www.cuberoot.in) (c) 2015
