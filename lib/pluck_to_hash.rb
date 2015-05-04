@@ -4,7 +4,7 @@ module PluckToHash
   extend ActiveSupport::Concern
 
   module ClassMethods
-    def pluck_to_hash(keys)
+    def pluck_to_hash(*keys)
       pluck(*keys).map{|row| Hash[Array(keys).zip(Array(row))]}
     end
 
