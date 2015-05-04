@@ -4,7 +4,7 @@ module PluckToHash
   extend ActiveSupport::Concern
 
   module ClassMethods
-  	def pluck_to_hash(keys)
+    def pluck_to_hash(keys)
       if keys.is_a? Array
         pluck(*keys).map{|row| Hash[*[keys, row].transpose.flatten]}
       else
