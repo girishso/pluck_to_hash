@@ -5,11 +5,7 @@ module PluckToHash
 
   module ClassMethods
   	def pluck_to_hash(keys)
-      if keys.is_a? Array
-        pluck(*keys).map{|row| Hash[*[keys, row].transpose.flatten]}
-      else
-      	pluck(*keys).map{|row| Hash[*[[keys], [row]].transpose.flatten]}
-      end
+      pluck(*keys).map{|row| Hash[*[Array(keys), Array(row)].transpose.flatten]}
     end
 
     alias_method :pluck_h, :pluck_to_hash
