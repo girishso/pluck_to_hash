@@ -1,9 +1,8 @@
 # What is that for?
 
-Extend ActiveRecord pluck to return hash instead of an array. Useful when plucking multiple columns for rendering json for example.
+Extends ActiveRecord by adding `pluck_to_hash` method that returns array of hashes instead of array of arrays. Useful when plucking multiple columns for rendering json or you need to access individual fields in your view for example.
 
 [![Gem Version](https://badge.fury.io/rb/pluck_to_hash.png)](http://badge.fury.io/rb/pluck_to_hash)
-
 
 ## Installation
 
@@ -26,7 +25,7 @@ Or install it yourself as:
 Usage is similar to `ActiveRecord.pluck`, for example
 
 ```ruby
-Post.limit(2).pluck_to_hash([:id, :title])
+Post.limit(2).pluck_to_hash(:id, :title)
 #
 # [{:id=>213, :title=>"foo"}, {:id=>214, :title=>"bar"}]
 #
@@ -57,4 +56,4 @@ Post.limit(2).pluck_h(:id)
 ## Licence
 MIT License
 
-Brought to you by: [Cube Root Software](http://www.cuberoot.in) (c) 2015
+Brought to you by: [Cube Root Software](http://www.cuberoot.in) &copy; 2015
