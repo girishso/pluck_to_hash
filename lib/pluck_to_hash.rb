@@ -1,4 +1,4 @@
-require "pluck_to_hash/version"
+require_relative "./pluck_to_hash/version"
 
 module PluckToHash
   extend ActiveSupport::Concern
