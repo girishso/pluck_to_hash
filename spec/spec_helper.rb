@@ -1,4 +1,3 @@
-require 'pry'
 require 'active_record'
 require_relative '../lib/pluck_to_hash'
 
