@@ -2,7 +2,7 @@ require_relative './spec_helper'
 
 describe 'PluckToHash' do
   before { TestModel.delete_all }
-  
+
   describe '.pluck_to_hash' do
     before do
       3.times.each do
@@ -58,7 +58,16 @@ describe 'PluckToHash' do
         expect(result).to eq [
           { serialized_attribute: [] },
           { serialized_attribute: ['Zygohistomorpic', 'Prepromorphism'] },
-          { serialized_attribute: ['Comonad'] },
+          { serialized_attribute: ['Comonad'] }
+        ]
+      end
+
+      it 'plucks a hash with multiple attributes' do
+        result = TestModel.pluck_to_hash(:test_attribute, :serialized_attribute)
+        expect(result).to eq [
+          { test_attribute: nil, serialized_attribute: [] },
+          { test_attribute: nil, serialized_attribute: ['Zygohistomorpic', 'Prepromorphism'] },
+          { test_attribute: nil, serialized_attribute: ['Comonad'] }
         ]
       end
     end
