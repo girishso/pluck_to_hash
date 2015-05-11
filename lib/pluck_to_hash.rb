@@ -5,7 +5,7 @@ module PluckToHash
 
   module ClassMethods
     def pluck_to_hash(*keys)
-      pluck(*keys).map{|row| Hash[keys.zip(Array(row))]}
+      pluck(*keys).map{|row| Hash[keys.zip([row])]}
     end
 
     alias_method :pluck_h, :pluck_to_hash
