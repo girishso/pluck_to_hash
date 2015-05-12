@@ -1,6 +1,8 @@
 require_relative './spec_helper'
 
 describe 'PluckToHash' do
+  before { TestModel.delete_all }
+
   describe '.pluck_to_hash' do
     before do
       3.times.each do
@@ -39,6 +41,34 @@ describe 'PluckToHash' do
           expect(hash).to have_key(:id)
           expect(hash).to have_key(:test_attribute)
         end
+      end
+    end
+  end
+
+  context 'when serialize attributes used' do
+    describe '.pluck_to_hash' do
+      before do
+        TestModel.create!(serialized_attribute: [])
+        TestModel.create!(serialized_attribute: ['Zygohistomorpic', 'Prepromorphism'])
+        TestModel.create!(serialized_attribute: ['Comonad'])
+      end
+      
+      it 'plucks the hash correctly' do
+        result = TestModel.pluck_to_hash(:serialized_attribute)
+        expect(result).to eq [
+          { serialized_attribute: [] },
+          { serialized_attribute: ['Zygohistomorpic', 'Prepromorphism'] },
+          { serialized_attribute: ['Comonad'] }
+        ]
+      end
+
+      it 'plucks a hash with multiple attributes' do
+        result = TestModel.pluck_to_hash(:test_attribute, :serialized_attribute)
+        expect(result).to eq [
+          { test_attribute: nil, serialized_attribute: [] },
+          { test_attribute: nil, serialized_attribute: ['Zygohistomorpic', 'Prepromorphism'] },
+          { test_attribute: nil, serialized_attribute: ['Comonad'] }
+        ]
       end
     end
   end
