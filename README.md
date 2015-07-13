@@ -60,8 +60,6 @@ select          0.566667   0.010000   0.576667 (  0.590911)
 as_json         1.196667   0.010000   1.206667 (  1.222286)
 ```
 
-You might be interested in reading the [reason for this](http://gavinmiller.io/2013/active-records-dirty-little-secret/).
-
 ## Contributing
 
 1. Fork it ( https://github.com/girishso/pluck_to_hash/fork )
