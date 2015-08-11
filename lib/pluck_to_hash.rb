@@ -5,10 +5,18 @@ module PluckToHash
 
   module ClassMethods
     def pluck_to_hash(*keys)
+      formatted_keys = keys.map do |k|
+        case k
+        when String
+          k.split(' as ')[-1].to_sym
+        when Symbol
+          k
+        end
+      end
 
       pluck(*keys).map do |row|
         row = [row] if keys.size == 1
-        Hash[keys.zip(row)]
+        Hash[formatted_keys.zip(row)]
       end
     end
 
