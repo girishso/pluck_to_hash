@@ -53,6 +53,7 @@ User.pluck_to_hash(:id, 'created_at::date as my_date', 'created_at::time as my_t
 # [{:id=>23, :my_date=>Fri, 11 Jul 2014, :my_time=>2000-01-01 07:54:36 UTC},
 #  {:id=>2, :my_date=>Tue, 01 Jul 2014, :my_time=>2000-01-01 14:36:15 UTC}]
 #
+```
 
 ## Why not `ActiveRecord.select` or `ActiveRecord.as_json`?
 
