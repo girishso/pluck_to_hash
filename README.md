@@ -45,6 +45,15 @@ Post.limit(2).pluck_h(:id)
 #
 ```
 
+Supports `select` alias
+
+```ruby
+User.pluck_to_hash(:id, 'created_at::date as my_date', 'created_at::time as my_time')
+#
+# [{:id=>23, :my_date=>Fri, 11 Jul 2014, :my_time=>2000-01-01 07:54:36 UTC},
+#  {:id=>2, :my_date=>Tue, 01 Jul 2014, :my_time=>2000-01-01 14:36:15 UTC}]
+#
+
 ## Why not `ActiveRecord.select` or `ActiveRecord.as_json`?
 
 Here are results of "benchmark" tests performed on MacBook Air. Each method did 10 runs, rejected the 2 highest and 2 lowest times and average the remaining 6. Ran these tests on about 40,000 records. We notice that `pluck_to_hash` is almost 4x faster than `select` and about 8x faster than `as_json`. As with all the "benchmarks", you should take these results with a pinch of salt!
