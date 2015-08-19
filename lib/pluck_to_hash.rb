@@ -16,7 +16,7 @@ module PluckToHash
 
       pluck(*keys).map do |row|
         row = [row] if keys.size == 1
-        Hash[formatted_keys.zip(row)]
+        HashWithIndifferentAccess[formatted_keys.zip(row)]
       end
     end
 
