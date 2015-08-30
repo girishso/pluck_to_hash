@@ -13,10 +13,15 @@ module PluckToHash
           k
         end
       end
+      
+      block_given = block_given?
+      keys = column_names if keys.blank?
 
       pluck(*keys).map do |row|
         row = [row] if keys.size == 1
-        Hash[formatted_keys.zip(row)]
+        HashWithIndifferentAccess[formatted_keys.zip(row)]
+        yield(value) if block_given
+        value
       end
     end
 
