@@ -5,19 +5,12 @@ module PluckToHash
 
   module ClassMethods
     def pluck_to_hash(*keys)
-      formatted_keys = keys.map do |k|
-        case k
-        when String
-          k.split(' as ')[-1].to_sym
-        when Symbol
-          k
-        end
-      end
-
-      pluck(*keys).map do |row|
-        row = [row] if keys.size == 1
-        Hash[formatted_keys.zip(row)]
-      end
+      # http://stackoverflow.com/questions/25331778/getting-typed-results-from-activerecord-raw-sql#answer-30948357
+      @type_map ||= PG::BasicTypeMapForResults.new(connection.raw_connection)
+      sql = select(*keys).to_sql
+      results = connection.execute(sql)
+      results.type_map = @type_map
+      results
     end
 
     alias_method :pluck_h, :pluck_to_hash
