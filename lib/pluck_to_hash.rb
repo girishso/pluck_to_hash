@@ -5,6 +5,7 @@ module PluckToHash
 
   module ClassMethods
     def pluck_to_hash(*keys)
+      keys = column_names if keys.blank?
       formatted_keys = keys.map do |k|
         case k
         when String
@@ -14,14 +15,9 @@ module PluckToHash
         end
       end
       
-      block_given = block_given?
-      keys = column_names if keys.blank?
-
       pluck(*keys).map do |row|
         row = [row] if keys.size == 1
         HashWithIndifferentAccess[formatted_keys.zip(row)]
-        yield(value) if block_given
-        value
       end
     end
 
