@@ -12,7 +12,7 @@ describe 'PluckToHash' do
 
     it 'plucks the ids of the objects to a hash correctly' do
       TestModel.all.pluck_to_hash(:id).each do |hash|
-        expect(hash.class).to eq(Hash)
+        expect(hash.class).to eq(HashWithIndifferentAccess)
         expect(hash).to have_key(:id)
       end
     end
@@ -37,7 +37,7 @@ describe 'PluckToHash' do
     context 'specifying multiple attributes' do
       it 'returns a hash with both attributes' do
         TestModel.all.pluck_to_hash(:id, :test_attribute).each do |hash|
-          expect(hash.class).to eq(Hash)
+          expect(hash.class).to eq(HashWithIndifferentAccess)
           expect(hash).to have_key(:id)
           expect(hash).to have_key(:test_attribute)
         end
@@ -56,18 +56,18 @@ describe 'PluckToHash' do
       it 'plucks the hash correctly' do
         result = TestModel.pluck_to_hash(:serialized_attribute)
         expect(result).to eq [
-          { serialized_attribute: [] },
-          { serialized_attribute: ['Zygohistomorpic', 'Prepromorphism'] },
-          { serialized_attribute: ['Comonad'] }
+          { serialized_attribute: [] }.with_indifferent_access,
+          { serialized_attribute: ['Zygohistomorpic', 'Prepromorphism'] }.with_indifferent_access,
+          { serialized_attribute: ['Comonad'] }.with_indifferent_access
         ]
       end
 
       it 'plucks a hash with multiple attributes' do
         result = TestModel.pluck_to_hash(:test_attribute, :serialized_attribute)
         expect(result).to eq [
-          { test_attribute: nil, serialized_attribute: [] },
-          { test_attribute: nil, serialized_attribute: ['Zygohistomorpic', 'Prepromorphism'] },
-          { test_attribute: nil, serialized_attribute: ['Comonad'] }
+          { test_attribute: nil, serialized_attribute: [] }.with_indifferent_access,
+          { test_attribute: nil, serialized_attribute: ['Zygohistomorpic', 'Prepromorphism'] }.with_indifferent_access,
+          { test_attribute: nil, serialized_attribute: ['Comonad'] }.with_indifferent_access
         ]
       end
     end
@@ -83,7 +83,7 @@ describe 'PluckToHash' do
 
       it 'plucks the ids of the objects to a hash correctly' do
         TestModel.all.pluck_h(:id).each do |hash|
-          expect(hash.class).to eq(Hash)
+          expect(hash.class).to eq(HashWithIndifferentAccess)
           expect(hash).to have_key(:id)
         end
       end
@@ -108,7 +108,7 @@ describe 'PluckToHash' do
       context 'specifying multiple attributes' do
         it 'returns a hash with both attributes' do
           TestModel.all.pluck_h(:id, :test_attribute).each do |hash|
-            expect(hash.class).to eq(Hash)
+            expect(hash.class).to eq(HashWithIndifferentAccess)
             expect(hash).to have_key(:id)
             expect(hash).to have_key(:test_attribute)
           end
