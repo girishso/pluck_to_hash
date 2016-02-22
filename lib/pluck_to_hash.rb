@@ -8,7 +8,7 @@ module PluckToHash
       formatted_keys = keys.map do |k|
         case k
         when String
-          k.split(' as ')[-1].to_sym
+          k.split(/ as /i)[-1].to_sym
         when Symbol
           k
         end

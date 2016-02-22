@@ -17,6 +17,25 @@ describe 'PluckToHash' do
       end
     end
 
+    it 'pluck field with lowercase alias' do
+      TestModel.all.pluck_to_hash('id as Something').each do |hash|
+        expect(hash).to have_key(:Something)
+      end
+    end
+
+    it 'pluck field with uppercase alias' do
+      TestModel.all.pluck_to_hash('id AS otherfield').each do |hash|
+        expect(hash).to have_key(:otherfield)
+      end
+    end
+
+    it 'pluck field with mixedcase alias' do
+      TestModel.all.pluck_to_hash('id As anotherfield').each do |hash|
+        expect(hash).to have_key(:anotherfield)
+      end
+    end
+
+
     context 'the model does not have the attribute specified' do
       it 'raises an error' do
         expect do
