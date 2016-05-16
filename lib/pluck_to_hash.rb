@@ -1,7 +1,9 @@
 require_relative "./pluck_to_hash/version"
 
 module PluckToHash
-  extend ActiveSupport::Concern
+  def self.included(base)
+    base.extend(ClassMethods)
+  end
 
   module ClassMethods
     def pluck_to_hash(*keys)
