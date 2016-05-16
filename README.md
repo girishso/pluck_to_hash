@@ -55,6 +55,18 @@ User.pluck_to_hash(:id, 'created_at::date as my_date', 'created_at::time as my_t
 #
 ```
 
+Accepts `block` parameter
+
+```ruby
+User.pluck_to_hash(:id, :title) do |user|
+  ...
+end
+```
+
+## Using with Sinatra or other non-rails frameworks without ActiveSupport
+
+Use version `0.1.4` that removes ActiveSupport dependency. `HashWithIndifferentAccess` is not used in that case.
+
 ## Why not `ActiveRecord.select` or `ActiveRecord.as_json`?
 
 Here are results of "benchmark" tests performed on MacBook Air. Each method did 10 runs, rejected the 2 highest and 2 lowest times and average the remaining 6. Ran these tests on about 40,000 records. We notice that `pluck_to_hash` is almost 4x faster than `select` and about 8x faster than `as_json`. As with all the "benchmarks", you should take these results with a pinch of salt!
