@@ -2,6 +2,8 @@
 
 Extends ActiveRecord by adding `pluck_to_hash` method that returns array of hashes instead of array of arrays. Useful when plucking multiple columns for rendering json or you need to access individual fields in your view for example.
 
+Supports `pluck_to_struct` since version 0.3.0. `pluck_to_struct` returns an array of `struct`s.
+
 [![Gem Version](https://badge.fury.io/rb/pluck_to_hash.png)](http://badge.fury.io/rb/pluck_to_hash) [![Build Status](https://travis-ci.org/girishso/pluck_to_hash.svg?branch=master)](https://travis-ci.org/girishso/pluck_to_hash)
 
 ## Installation
@@ -58,10 +60,44 @@ User.pluck_to_hash(:id, 'created_at::date as my_date', 'created_at::time as my_t
 Accepts `block` parameter
 
 ```ruby
-User.pluck_to_hash(:id, :title) do |user|
+User.pluck_to_hash(:id, :title) do |user_hash|
   ...
 end
 ```
+
+### Using `pluck_to_struct`
+
+```ruby
+posts = Post.limit(2).pluck_to_struct(:id, :title)
+#
+# [#<struct id=1, title="foo">, #<struct id=2, title="bar">]
+#
+
+posts.first.id
+# 1
+
+posts.first.title
+# "foo"
+
+```
+
+or use the shorter alias `pluck_s`
+
+```ruby
+posts = Post.limit(2).pluck_s(:id, :title)
+#
+# [#<struct id=1, title="foo">, #<struct id=2, title="bar">]
+#
+```
+
+Supports `block` parameter as well
+
+```ruby
+Post.limit(2).pluck_to_struct(:id, :title) do |post_struct|
+  puts post_struct.title
+end
+```
+
 
 ## Using with Sinatra or other non-rails frameworks without ActiveSupport
 
@@ -93,4 +129,4 @@ as_json         1.196667   0.010000   1.206667 (  1.222286)
 ## Licence
 MIT License
 
-Brought to you by: [Cube Root Software](http://www.cuberoot.in) &copy; 2015
+Brought to you by: [Cube Root Software](http://www.cuberoot.in) &copy; 2016
