@@ -6,38 +6,42 @@ module PluckToHash
   module ClassMethods
     def pluck_to_hash(*keys)
       block_given = block_given?
-      keys = column_names if keys.blank?
-      formatted_keys = format_keys(keys)
+      keys, formatted_keys = format_keys(keys)
+      keys_one = keys.size == 1
+
       pluck(*keys).map do |row|
-        row = [row] if keys.size == 1
-        value = HashWithIndifferentAccess[formatted_keys.zip(row)]
-        yield(value) if block_given
-        value
+        value = HashWithIndifferentAccess[formatted_keys.zip(keys_one ? [row] : row)]
+        block_given ? yield(value) : value
       end
     end
 
     def pluck_to_struct(*keys)
       block_given = block_given?
-      keys = column_names if keys.blank?
-      formatted_keys = format_keys(keys)
+      keys, formatted_keys = format_keys(keys)
+      keys_one = keys.size == 1
 
-      struct = Struct.new(*formatted_keys)
+      struct = Struct.new(*formatted_keys.map(&:to_sym))
       pluck(*keys).map do |row|
-        row = [row] if keys.size == 1
-        value = struct.new(*row)
-        yield(value) if block_given
-        value
+        value = keys_one ? struct.new(*[row]) : struct.new(*row)
+        block_given ? yield(value) : value
       end
     end
 
     def format_keys(keys)
-      keys.map do |k|
-        case k
-        when String
-          k.split(/ as /i)[-1].to_sym
-        when Symbol
-          k
-        end
+      if keys.blank?
+        [column_names, column_names]
+      else
+        [
+          keys,
+          keys.map do |k|
+            case k
+            when String
+              k.split(/ as /i)[-1]
+            when Symbol
+              k.to_s
+            end
+          end
+        ]
       end
     end
 

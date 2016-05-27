@@ -12,7 +12,7 @@ describe 'PluckToStruct' do
 
     it 'plucks the ids, test_attributes of the objects to a struct correctly' do
       TestModel.all.pluck_to_struct(:test_attribute, :id).each_with_index do |model, ix|
-        id = ix+1
+        id = ix + 1
         expect(model).to be_a(Struct)
         expect(model.test_attribute).to eq("test#{id}")
         expect(model.id).to eq(id)
@@ -30,16 +30,14 @@ describe 'PluckToStruct' do
       it 'raises an error' do
         expect do
           TestModel.all.pluck_h(:foo)
-        end.to raise_error
+        end.to raise_error(ActiveRecord::StatementInvalid)
       end
     end
 
     context 'no models exist for the given criteria' do
       it 'returns an empty relation' do
-        expect do
-          result = TestModel.where(id: -1).pluck_h(:id)
-          expect(result).to be_empty
-        end.to_not raise_error
+        result = TestModel.where(id: -1).pluck_h(:id)
+        expect(result).to be_empty
       end
     end
 

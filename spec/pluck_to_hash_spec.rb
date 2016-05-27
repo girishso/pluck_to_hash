@@ -35,21 +35,18 @@ describe 'PluckToHash' do
       end
     end
 
-
     context 'the model does not have the attribute specified' do
       it 'raises an error' do
         expect do
           TestModel.all.pluck_to_hash(:foo)
-        end.to raise_error
+        end.to raise_error(ActiveRecord::StatementInvalid)
       end
     end
 
     context 'no models exist for the given criteria' do
       it 'returns an empty relation' do
-        expect do
-          result = TestModel.where(id: -1).pluck_to_hash(:id)
-          expect(result).to be_empty
-        end.to_not raise_error
+        result = TestModel.where(id: -1).pluck_to_hash(:id)
+        expect(result).to be_empty
       end
     end
 
@@ -111,16 +108,14 @@ describe 'PluckToHash' do
         it 'raises an error' do
           expect do
             TestModel.all.pluck_h(:foo)
-          end.to raise_error
+          end.to raise_error(ActiveRecord::StatementInvalid)
         end
       end
 
       context 'no models exist for the given criteria' do
         it 'returns an empty relation' do
-          expect do
-            result = TestModel.where(id: -1).pluck_h(:id)
-            expect(result).to be_empty
-          end.to_not raise_error
+          result = TestModel.where(id: -1).pluck_h(:id)
+          expect(result).to be_empty
         end
       end
 
