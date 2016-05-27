@@ -1,4 +1,5 @@
 require_relative './spec_helper'
+require 'values'
 
 describe 'PluckToStruct' do
   before { TestModel.delete_all }
@@ -40,6 +41,14 @@ describe 'PluckToStruct' do
           result = TestModel.where(id: -1).pluck_h(:id)
           expect(result).to be_empty
         end.to_not raise_error
+      end
+    end
+
+    context 'when a different struct type is specified' do
+      it 'returns an object with all attributes' do
+        TestModel.all.pluck_to_struct(:test_attribute, :id, struct_type: Value).each do |model|
+          expect(model).to respond_to(:id, :test_attribute)
+        end
       end
     end
 

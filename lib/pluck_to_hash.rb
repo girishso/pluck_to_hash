@@ -4,24 +4,24 @@ module PluckToHash
   extend ActiveSupport::Concern
 
   module ClassMethods
-    def pluck_to_hash(*keys)
+    def pluck_to_hash(*keys, hash_type: HashWithIndifferentAccess)
       block_given = block_given?
       keys = column_names if keys.blank?
       formatted_keys = format_keys(keys)
       pluck(*keys).map do |row|
         row = [row] if keys.size == 1
-        value = HashWithIndifferentAccess[formatted_keys.zip(row)]
+        value = hash_type[formatted_keys.zip(row)]
         yield(value) if block_given
         value
       end
     end
 
-    def pluck_to_struct(*keys)
+    def pluck_to_struct(*keys, struct_type: Struct)
       block_given = block_given?
       keys = column_names if keys.blank?
       formatted_keys = format_keys(keys)
 
-      struct = Struct.new(*formatted_keys)
+      struct = struct_type.new(*formatted_keys)
       pluck(*keys).map do |row|
         row = [row] if keys.size == 1
         value = struct.new(*row)
