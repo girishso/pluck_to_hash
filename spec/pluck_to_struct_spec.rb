@@ -31,7 +31,7 @@ describe 'PluckToStruct' do
       it 'raises an error' do
         expect do
           TestModel.all.pluck_h(:foo)
-        end.to raise_error
+        end.to raise_error ActiveRecord::StatementInvalid
       end
     end
 

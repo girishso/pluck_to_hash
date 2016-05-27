@@ -4,7 +4,8 @@ module PluckToHash
   extend ActiveSupport::Concern
 
   module ClassMethods
-    def pluck_to_hash(*keys, hash_type: HashWithIndifferentAccess)
+    def pluck_to_hash(*keys)
+      hash_type = keys[-1].is_a?(Hash) ? keys.pop.fetch(:hash_type,HashWithIndifferentAccess) : HashWithIndifferentAccess
       block_given = block_given?
       keys = column_names if keys.blank?
       formatted_keys = format_keys(keys)
@@ -16,7 +17,8 @@ module PluckToHash
       end
     end
 
-    def pluck_to_struct(*keys, struct_type: Struct)
+    def pluck_to_struct(*keys)
+      struct_type = keys[-1].is_a?(Hash) ? keys.pop.fetch(:struct_type,Struct) : Struct
       block_given = block_given?
       keys = column_names if keys.blank?
       formatted_keys = format_keys(keys)
