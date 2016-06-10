@@ -106,9 +106,9 @@ Post.limit(2).pluck_to_struct(:id, :title) do |post_struct|
 end
 ```
 
-Allows specifying the type of struct. Defaults to statndard Struct.
+Allows specifying the type of struct. Defaults to standard Struct.
 ```ruby
-Post.limit(2).pluck_to_struct(:id, :title,struct_type: OtherStructType) do |post_struct|
+Post.limit(2).pluck_to_struct(:id, :title, struct_type: OtherStructType) do |post_struct|
   puts post_struct.title
 end
 ```
