@@ -1,4 +1,5 @@
 require_relative './spec_helper'
+require 'values'
 
 describe 'PluckToStruct' do
   before { TestModel.delete_all }
@@ -29,15 +30,23 @@ describe 'PluckToStruct' do
     context 'the model does not have the attribute specified' do
       it 'raises an error' do
         expect do
-          TestModel.all.pluck_h(:foo)
+          TestModel.all.pluck_s(:foo)
         end.to raise_error(ActiveRecord::StatementInvalid)
       end
     end
 
     context 'no models exist for the given criteria' do
       it 'returns an empty relation' do
-        result = TestModel.where(id: -1).pluck_h(:id)
+        result = TestModel.where(id: -1).pluck_s(:id)
         expect(result).to be_empty
+      end
+    end
+
+    context 'when a different struct type is specified' do
+      it 'returns an object with all attributes' do
+        TestModel.all.pluck_to_struct(:test_attribute, :id, struct_type: Value).each do |model|
+          expect(model).to respond_to(:id, :test_attribute)
+        end
       end
     end
 

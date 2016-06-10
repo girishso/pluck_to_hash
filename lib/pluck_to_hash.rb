@@ -5,22 +5,24 @@ module PluckToHash
 
   module ClassMethods
     def pluck_to_hash(*keys)
+      hash_type = keys[-1].is_a?(Hash) ? keys.pop.fetch(:hash_type,HashWithIndifferentAccess) : HashWithIndifferentAccess
       block_given = block_given?
       keys, formatted_keys = format_keys(keys)
       keys_one = keys.size == 1
 
       pluck(*keys).map do |row|
-        value = HashWithIndifferentAccess[formatted_keys.zip(keys_one ? [row] : row)]
+        value = hash_type[formatted_keys.zip(keys_one ? [row] : row)]
         block_given ? yield(value) : value
       end
     end
 
     def pluck_to_struct(*keys)
+      struct_type = keys[-1].is_a?(Hash) ? keys.pop.fetch(:struct_type,Struct) : Struct
       block_given = block_given?
       keys, formatted_keys = format_keys(keys)
       keys_one = keys.size == 1
 
-      struct = Struct.new(*formatted_keys.map(&:to_sym))
+      struct = struct_type.new(*formatted_keys)
       pluck(*keys).map do |row|
         value = keys_one ? struct.new(*[row]) : struct.new(*row)
         block_given ? yield(value) : value
@@ -36,9 +38,9 @@ module PluckToHash
           keys.map do |k|
             case k
             when String
-              k.split(/ as /i)[-1]
+              k.split(/\bas\b/i)[-1].strip.to_sym
             when Symbol
-              k.to_s
+              k
             end
           end
         ]

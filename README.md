@@ -65,6 +65,14 @@ User.pluck_to_hash(:id, :title) do |user_hash|
 end
 ```
 
+Allows specifying the type of hash. Defaults to HashWithIndifferentAccess
+
+```ruby
+User.pluck_to_hash(:id, :title, hash_type: CustomHash) do |custom_hash|
+  ...
+end
+```
+
 ### Using `pluck_to_struct`
 
 ```ruby
@@ -98,6 +106,12 @@ Post.limit(2).pluck_to_struct(:id, :title) do |post_struct|
 end
 ```
 
+Allows specifying the type of struct. Defaults to statndard Struct.
+```ruby
+Post.limit(2).pluck_to_struct(:id, :title,struct_type: OtherStructType) do |post_struct|
+  puts post_struct.title
+end
+```
 
 ## Using with Sinatra or other non-rails frameworks without ActiveSupport
 
