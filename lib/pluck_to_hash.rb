@@ -30,21 +30,34 @@ module PluckToHash
     end
 
     def format_keys(keys)
-      if keys.blank?
-        [column_names, column_names]
+      if database_adapter == :postgresql
+        # http://stackoverflow.com/questions/25331778/getting-typed-results-from-activerecord-raw-sql#answer-30948357
+        @type_map ||= PG::BasicTypeMapForResults.new(connection.raw_connection)
+        sql = select(*keys).to_sql
+        results = connection.execute(sql)
+        results.type_map = @type_map
+        results
       else
-        [
-          keys,
-          keys.map do |k|
-            case k
-            when String
-              k.split(/\bas\b/i)[-1].strip.to_sym
-            when Symbol
-              k
+        if keys.blank?
+          [column_names, column_names]
+        else
+          [
+            keys,
+            keys.map do |k|
+              case k
+              when String
+                k.split(/\bas\b/i)[-1].strip.to_sym
+              when Symbol
+                k
+              end
             end
-          end
-        ]
+          ]
+        end
       end
+    end
+
+    def database_adapter
+      @postgres ||= ActiveRecord::Base.connection.adapter_name.downcase.to_sym
     end
 
     alias_method :pluck_h, :pluck_to_hash

@@ -78,7 +78,7 @@ describe 'PluckToHash' do
         TestModel.create!(serialized_attribute: ['Zygohistomorpic', 'Prepromorphism'])
         TestModel.create!(serialized_attribute: ['Comonad'])
       end
-      
+
       it 'plucks the hash correctly' do
         result = TestModel.pluck_to_hash(:serialized_attribute)
         expect(result).to eq [
