@@ -6,5 +6,6 @@ gemspec
 group :test do
   gem 'rspec'
   gem 'sqlite3'
-  gem 'activesupport'
+  gem 'activesupport', '4.2.6'
+  gem 'pg'
 end
