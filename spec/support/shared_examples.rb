@@ -103,3 +103,13 @@ shared_context 'making sure alias is fine' do
     end
   end
 end
+
+shared_context 'when using a different hash type' do
+  it 'returns a hash of the correct type with all attributes' do
+    TestModel.all.pluck_to_hash(:id, :test_attribute, hash_type: Hash).each do |hash|
+      expect(hash.class).to eq(Hash)
+      expect(hash.with_indifferent_access).to have_key(:id)
+      expect(hash.with_indifferent_access).to have_key(:test_attribute)
+    end
+  end
+end
