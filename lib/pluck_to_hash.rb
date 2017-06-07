@@ -43,9 +43,10 @@ module PluckToHash
       if keys.blank?
         [column_names, column_names]
       else
+        ks = keys.map{|k| k.instance_of?(String) ? k.split(",") : k}.flatten
         [
-          keys,
-          keys.map do |k|
+          ks,
+          ks.map do |k|
             case k
             when String
               k.split(/\bas\b/i)[-1].strip.to_sym
