@@ -9,10 +9,9 @@ module PluckToHash
       hash_type = keys[-1].is_a?(Hash) ? keys.pop.fetch(:hash_type,HashWithIndifferentAccess) : HashWithIndifferentAccess
 
       keys, formatted_keys = format_keys(keys)
-      keys_one = keys.size == 1
 
       pluck(*keys).map do |row|
-        value = hash_type[formatted_keys.zip(keys_one ? [row] : row)]
+        value = hash_type[formatted_keys.zip(Array(row))]
         block_given ? yield(value) : value
       end
     end
