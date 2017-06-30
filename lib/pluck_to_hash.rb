@@ -8,7 +8,7 @@ module PluckToHash
       block_given = block_given?
       hash_type = keys[-1].is_a?(Hash) ? keys.pop.fetch(:hash_type,HashWithIndifferentAccess) : HashWithIndifferentAccess
 
-      if database_adapter == :postgresql
+      if database_adapter == :postgresqlx
         # http://stackoverflow.com/questions/25331778/getting-typed-results-from-activerecord-raw-sql#answer-30948357
         @type_map ||= PG::BasicTypeMapForResults.new(connection.raw_connection)
         sql = select(*keys).to_sql
@@ -48,9 +48,10 @@ module PluckToHash
         if keys.blank?
           [column_names, column_names]
         else
+          ks = keys.map{|k| k.instance_of?(String) ? k.split(",") : k}.flatten
           [
-            keys,
-            keys.map do |k|
+            ks,
+            ks.map do |k|
               case k
               when String
                 k.split(/\bas\b/i)[-1].strip.to_sym
