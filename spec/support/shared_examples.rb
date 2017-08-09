@@ -41,7 +41,7 @@ shared_context 'essentials' do
   end
 
   it 'works with join' do
-    TestModel.joins(:test_model_children).pluck_to_hash('test_models.id, test_model_children.id').each do |hash|
+    TestModel.joins(:test_model_children).pluck_to_hash('test_models.id', 'test_model_children.id').each do |hash|
       expect(hash).to have_key('test_models.id')
       expect(hash).to have_key('test_model_children.id')
     end

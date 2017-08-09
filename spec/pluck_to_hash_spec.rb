@@ -34,6 +34,13 @@ describe 'PluckToHash' do
           { test_attribute: nil, serialized_attribute: ['Comonad'] }.with_indifferent_access
         ]
       end
+
+      it 'plucks coalesce as correctly' do
+        TestModel.pluck_to_hash('coalesce(sum(price_1 - price_2), 0) as difference', 'count(test_models.id) as count').each do |result|
+          expect(result).to have_key('difference')
+          expect(result).to have_key('count')
+        end
+      end
     end
   end
 end

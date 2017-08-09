@@ -7,6 +7,8 @@ def run_migrations
     create_table :test_models do |t|
       t.string :test_attribute
       t.string :serialized_attribute
+      t.integer :price_1
+      t.integer :price_2
     end
     create_table :test_model_children do |t|
       t.integer :test_model_id
