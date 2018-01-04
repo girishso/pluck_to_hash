@@ -1,4 +1,10 @@
-require_relative "./pluck_to_hash/version"
+if defined?(Rails)
+  require 'pluck_to_hash/railtie'
+else
+  require 'active_record'
+  require 'active_support/concern'
+  require 'active_support/hash_with_indifferent_access'
+end
 
 module PluckToHash
   extend ActiveSupport::Concern
@@ -58,4 +64,4 @@ module PluckToHash
   end
 end
 
-ActiveRecord::Base.send(:include, PluckToHash)
+ActiveRecord::Base.send(:include, PluckToHash) unless defined?(Rails)
