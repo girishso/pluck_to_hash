@@ -47,14 +47,6 @@ shared_context 'essentials' do
     end
   end
 
-  context 'the model does not have the attribute specified' do
-    it 'raises an error' do
-      expect do
-        TestModel.all.pluck_to_hash(:foo)
-      end.to raise_error(ActiveRecord::StatementInvalid)
-    end
-  end
-
   context 'no models exist for the given criteria' do
     it 'returns an empty relation' do
       result = TestModel.where(id: -1).pluck_to_hash(:id)
