@@ -1,5 +1,9 @@
 language: ruby
+sudo: false
+cache: bundler
 rvm:
-  - "2.2.0"
-# uncomment this line if your project needs to run something other than `rake`:
-script: bundle exec rspec spec
+  - 2.2.8
+  - 2.3.5
+  - 2.4.2
+script:
+  - bundle exec rspec
