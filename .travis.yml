@@ -7,3 +7,4 @@ rvm:
   - 2.4.2
 script:
   - bundle exec rspec
+  - bundle exec rubocop -- parallel

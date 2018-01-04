@@ -1,0 +1,12 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  DisplayCopNames: true
+  Exclude:
+    - 'spec/**/*'
+Documentation:
+  Enabled: false
+Metrics/LineLength:
+  Max: 125
+Metrics/MethodLength:
+  Max: 20
