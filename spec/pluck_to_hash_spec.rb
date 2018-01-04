@@ -13,7 +13,7 @@ describe 'PluckToHash' do
     describe '.pluck_to_hash' do
       before do
         TestModel.create!(serialized_attribute: [])
-        TestModel.create!(serialized_attribute: ['Zygohistomorpic', 'Prepromorphism'])
+        TestModel.create!(serialized_attribute: %w[Zygohistomorpic Prepromorphism])
         TestModel.create!(serialized_attribute: ['Comonad'])
       end
 
@@ -21,7 +21,7 @@ describe 'PluckToHash' do
         result = TestModel.pluck_to_hash(:serialized_attribute)
         expect(result).to eq [
           { serialized_attribute: [] }.with_indifferent_access,
-          { serialized_attribute: ['Zygohistomorpic', 'Prepromorphism'] }.with_indifferent_access,
+          { serialized_attribute: %w[Zygohistomorpic Prepromorphism] }.with_indifferent_access,
           { serialized_attribute: ['Comonad'] }.with_indifferent_access
         ]
       end
@@ -30,7 +30,7 @@ describe 'PluckToHash' do
         result = TestModel.pluck_to_hash(:test_attribute, :serialized_attribute)
         expect(result).to eq [
           { test_attribute: nil, serialized_attribute: [] }.with_indifferent_access,
-          { test_attribute: nil, serialized_attribute: ['Zygohistomorpic', 'Prepromorphism'] }.with_indifferent_access,
+          { test_attribute: nil, serialized_attribute: %w[Zygohistomorpic Prepromorphism] }.with_indifferent_access,
           { test_attribute: nil, serialized_attribute: ['Comonad'] }.with_indifferent_access
         ]
       end

@@ -4,8 +4,8 @@ require_relative './migrations'
 require_relative './support/shared_examples'
 
 ActiveRecord::Base.establish_connection(
-  "adapter"  => "sqlite3",
-  "database" => ":memory:"
+  'adapter'  => 'sqlite3',
+  'database' => ':memory:'
 )
 
-run_migrations()
+run_migrations
