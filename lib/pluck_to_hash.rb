@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if defined?(Rails)
   require 'pluck_to_hash/railtie'
 else

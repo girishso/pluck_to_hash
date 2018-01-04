@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'pluck_to_hash'
 
 module PluckToHash
