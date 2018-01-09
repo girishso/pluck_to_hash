@@ -1,7 +1,10 @@
 inherit_from: .rubocop_todo.yml
 
 AllCops:
+  TargetRubyVersion: 2.4
   DisplayCopNames: true
+  Exclude:
+    - 'spec/**/*'
 Documentation:
   Enabled: false
 Metrics/LineLength:
