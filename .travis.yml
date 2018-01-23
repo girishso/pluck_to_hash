@@ -15,5 +15,6 @@ gemfile:
 before_install:
   - gem update --system
 script:
+  - bundle install
   - bundle exec rspec
   - bundle exec rubocop -- parallel
