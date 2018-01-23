@@ -1,5 +1,4 @@
 require 'active_record'
-require 'pg'
 require_relative '../lib/pluck_to_hash'
 require_relative './migrations'
 require_relative './support/shared_examples'
