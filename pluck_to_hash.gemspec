@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'activerecord', '>= 4.0.2'
   spec.add_dependency 'activesupport', '>= 4.0.2'
 
-  spec.add_development_dependency 'pg'
+  spec.add_development_dependency 'pg', '~> 0.19.0'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'sqlite3'
