@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-lib = File.expand_path('../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+$LOAD_PATH.push File.expand_path('../lib', __FILE__)
 require 'pluck_to_hash/version'
 
 Gem::Specification.new do |spec|
@@ -22,9 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'activerecord', '>= 4.0.2'
   spec.add_dependency 'activesupport', '>= 4.0.2'
 
-  spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'pg'
-  spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'sqlite3'
