@@ -27,11 +27,13 @@ describe 'PluckToStruct' do
       end
     end
 
-    context 'the model does not have the attribute specified' do
-      it 'raises an error' do
-        expect do
-          TestModel.all.pluck_s(:foo)
-        end.to raise_error(ActiveRecord::StatementInvalid)
+    if ActiveRecord::VERSION::MAJOR < 5
+      context 'the model does not have the attribute specified' do
+        it 'raises an error' do
+          expect do
+            TestModel.all.pluck_s(:foo)
+          end.to raise_error(ActiveRecord::StatementInvalid)
+        end
       end
     end
 
