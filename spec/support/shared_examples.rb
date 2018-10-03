@@ -22,6 +22,12 @@ shared_context 'essentials' do
     end
   end
 
+  it 'pluck field with symbol alias' do
+    TestModel.all.pluck_to_hash(:'id as something').each do |hash|
+      expect(hash).to have_key(:something)
+    end
+  end
+
   it 'pluck field with uppercase alias' do
     TestModel.all.pluck_to_hash('id AS otherfield').each do |hash|
       expect(hash).to have_key(:otherfield)
