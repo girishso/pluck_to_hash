@@ -4,6 +4,9 @@ module PluckToHash
   extend ActiveSupport::Concern
 
   module ClassMethods
+
+    AS_REGEX = /\bas\b/i
+
     def pluck_to_hash(*keys)
       block_given = block_given?
       hash_type = keys[-1].is_a?(Hash) ? keys.pop.fetch(:hash_type,HashWithIndifferentAccess) : HashWithIndifferentAccess
@@ -44,13 +47,21 @@ module PluckToHash
             keys.map do |k|
               case k
               when String
-                k.split(/\bas\b/i)[-1].strip.to_sym
+                extract_as(k)
               when Symbol
-                k
+                if !(k.to_s =~ AS_REGEX).nil?
+                  extract_as(k.to_s)
+                else
+                  k
+                end
               end
             end
           ]
         end
+      end
+
+      def extract_as(input)
+        input.split(AS_REGEX)[-1].strip.to_sym
       end
 
     alias_method :pluck_h, :pluck_to_hash
